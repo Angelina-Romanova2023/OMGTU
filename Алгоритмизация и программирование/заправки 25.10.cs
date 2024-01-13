@@ -22,12 +22,12 @@ class HelloWorld {
       {
           int b1=a[((k-1)/2)]+p;
           int b2=a[((k-1)/2)]-p;
-          Console.WriteLine($"{b2} или {b1}");
+          Console.WriteLine($"заправку можно расположить на расстоянии {b2} или {b1} от первого города");
       }
       else
       {
           int b=a[((k+1)/2)]-p;
-          Console.WriteLine(b);
+          Console.WriteLine($"заправку можно расположить на расстоянии {b} от первого города");
       }
   }
 }
