@@ -1,0 +1,318 @@
+using System;
+namespace ConsoleApplication9
+{
+    class AudiFond     //класс аудиторный фонд
+    {
+        public int seats;
+        public bool proj;
+        public int comps;
+        public int korpus;
+        public int floor;
+        public int nomer;
+
+        public AudiFond(int seats, bool proj, int comps, int korpus, int floor, int nomer)
+        {
+            this.seats = seats;
+            this.proj = proj;
+            this.comps = comps;
+            this.korpus = korpus;
+            this.floor = floor;
+            this.nomer = nomer;
+        }
+        
+        public bool getProj() //тут пошли гэты и сэты
+        {
+            return proj;
+        }
+        public int getSeats()
+        {
+            return seats;
+        }
+        public int getComps()
+        {
+            return comps;
+        }
+        public int getKorpus()
+        {
+            return korpus;
+        }
+        public int getFloor()
+        {
+            return floor;
+        }
+        public int getNomer()
+        {
+            return nomer;
+        }
+        public void setSeats(int b)
+        {
+            seats = b;
+            return;
+        }
+        public void setComps(int b)
+        {
+            comps = b;
+            return;
+        }
+        public void setKorpus(int b)
+        {
+            korpus = b;
+            return;
+        }
+        public void setFloor(int b)
+        {
+            floor = b;
+            return;
+        }
+        public void setNomer(int b)
+        {
+            nomer = b;
+            return;
+        }
+        public void setProj()
+        {
+            proj = !proj;
+            return;
+        }
+
+        public void Info(AudiFond AAA) //метод для вывода данных
+        {
+            if (AAA != null)
+            {
+                Console.WriteLine();
+                Console.Write("Аудитория "+AAA.korpus+"-"+AAA.floor);
+                if (AAA.nomer < 10) Console.Write("0");
+                Console.WriteLine(AAA.nomer+" имеет в распоряжении:");
+                Console.WriteLine("Компьютеры - " + AAA.comps);
+                Console.WriteLine("Места - " + AAA.seats);
+                Console.Write("Проектор - ");
+                if (AAA.getProj() == true) Console.Write("имеется в наличии");
+                else Console.WriteLine("нет в наличии");
+               
+                Console.WriteLine();
+            }
+            return;
+        }
+
+    }
+    class Menu // класс для работы меню
+    {
+        static AudiFond[] Based = new AudiFond[1];
+        static public bool On = true;
+
+        static public AudiFond CreateAud()
+        {
+            Console.WriteLine("введите");
+
+            Console.WriteLine("места");
+            int seats = Convert.ToInt32(Console.ReadLine());
+
+            Console.WriteLine("компьютеры");
+            int comps = Convert.ToInt32(Console.ReadLine());
+
+            Console.WriteLine("корпус");
+            int korpus = Convert.ToInt32(Console.ReadLine());
+
+            int floor = 10;
+            int nomer = 100;
+
+            while (floor > 9)
+            {
+                Console.WriteLine("этаж до 9 включительно");
+                floor = Convert.ToInt32(Console.ReadLine());
+            }
+
+            while (nomer > 99)
+            {
+                Console.WriteLine("номер до 99 включительно");
+                nomer = Convert.ToInt32(Console.ReadLine());
+            }
+
+            Console.WriteLine("проектор(true or false)");
+            bool proj = Convert.ToBoolean(Console.ReadLine());
+            AudiFond bababa = new AudiFond(seats, proj, comps, korpus, floor, nomer);
+            return bababa;
+        }
+
+        static public void AddAud() //еще ввод
+        {
+            Array.Resize(ref Based, Based.Length + 1);
+            Based[Based.Length - 1] = CreateAud();
+        }
+        static public void CreateBased() //ввод данных
+        {
+            Based[0] = CreateAud();
+        }
+        static public void Sort1(int N) //выборка по количеству мест
+        {
+            for (int i = 0; i < Based.Length; i++)
+            {
+                if (Based[i].getSeats() >= N) Based[i].Info(Based[i]);
+            }
+        }
+        static public void Sort2(int N) //аудитории с компьютерами в заданном количестве
+        {
+            for (int i = 0; i < Based.Length; i++)
+            {
+                if (Based[i].getComps() >= N) Based[i].Info(Based[i]);
+            }
+        }
+        static public void Sort3(int N, int m) //аудитории с компьютерами на заданном этаже
+        {
+            for (int i = 0; i < Based.Length; i++)
+            {
+                if ((Based[i].getComps() >= N) && (Based[i].getFloor() == m))
+                    Based[i].Info(Based[i]);
+            }
+        }
+        static public void Sort4(int N, int n, int b) //аудитории в заданном корпусе на заданном этаже с заданным количеством посадочных мест
+        {
+            for (int i = 0; i < Based.Length; i++)
+            {
+                if ((Based[i].getSeats() >= N) && (Based[i].getFloor() == n) && (Based[i].getKorpus() == b))
+                    Based[i].Info(Based[i]);
+            }
+        }
+        static public void ChangeAud(int nom, int flo, int kor)
+        {
+            bool change = true;
+            for (int i = 0; i < Based.Length; i++)
+            {
+                if ((Based[i].getNomer() == nom) && (Based[i].getFloor() == flo) && (Based[i].getKorpus() == kor))
+                {
+                    while (change)
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine("Введите");
+                        Console.WriteLine("1, чтобы поменять количество мест");
+                        Console.WriteLine("2, чтобы поменять количество компьютеров");
+                        Console.WriteLine("3, чтобы поменять наличие проектора");
+                        Console.WriteLine("4, чтобы поменять номер аудитории");
+                        Console.WriteLine("5, чтобы поменять этаж");
+                        Console.WriteLine("6, чтобы поменять корпус");
+                        Console.WriteLine("7, чтобы выйти из меню изменений");
+                        int d = Convert.ToInt32(Console.ReadLine());
+                        switch (d)
+                        {
+                            case 1:
+                                Based[i].setSeats(Convert.ToInt32(Console.ReadLine()));
+                                break;
+                            case 2:
+                                Based[i].setComps(Convert.ToInt32(Console.ReadLine()));
+                                break;
+                            case 3:
+                                Based[i].setProj();
+                                break;
+                            case 4:
+                                int nome = 100;
+                                while (nome > 99)
+                                {
+                                    Console.WriteLine("номер до 99 включительно");
+                                    nome = Convert.ToInt32(Console.ReadLine());
+                                }
+                                Based[i].setNomer(nome);
+                                break;
+                            case 5:
+                                int floo = 10;
+                                while (floo > 9)
+                                {
+                                    Console.WriteLine("этаж до 9 включительно");
+                                    floo = Convert.ToInt32(Console.ReadLine());
+                                }
+                                Based[i].setFloor(floo);
+                                break;
+                            case 6:
+                                Based[i].setKorpus(Convert.ToInt32(Console.ReadLine()));
+                                break;
+                            case 7:
+                                change = false;
+                                break;
+                        }
+                    }
+                }
+                
+
+                
+            }
+        }
+        static public void Info() //вывод данных
+        {
+            for (int i = 0; i < Based.Length; i++) Based[i].Info(Based[i]);
+            Console.WriteLine();
+            return;
+        }
+        static public void Exit() //выход
+        {
+            On = false;
+            return;
+        }
+    }
+
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            while (Menu.On)
+            {
+                Console.WriteLine();
+                Console.WriteLine("Меню");
+                Console.WriteLine("введите 1 для создания базы данных");
+                Console.WriteLine("введите 2 для дополнения базы данных");
+                Console.WriteLine("введите 3 для выборки по количеству мест");
+                Console.WriteLine("введите 4 для  выборки по количеству компьютеров");
+                Console.WriteLine("введите 5 для выборки по наличию компьютеров на заданном этаже");
+                Console.WriteLine("введите 6 для выборки по номеру корпуса, этажу и количеству мест в аудитории");
+                Console.WriteLine("введите 7 для изменения данных для заданной аудитории");
+                Console.WriteLine("введите 8 для вывода всех данных");
+                Console.WriteLine("введите 9, чтобы окончить работу");
+                int d = Convert.ToInt32(Console.ReadLine());
+                switch (d)
+                {
+                    case 1:
+                        Menu.CreateBased();
+                        break;
+                    case 2:
+                        Menu.AddAud();
+                        break;
+                    case 3:
+                        Console.WriteLine("введите колличество мест");
+                        int k = Convert.ToInt32(Console.ReadLine());
+                        Menu.Sort1(k);
+                        break;
+                    case 4:
+                        Console.WriteLine("введите количество компьютеров, которое требуется");
+                        int kol = Convert.ToInt32(Console.ReadLine());
+                        Menu.Sort2(kol);
+                        break;
+                    case 5:
+                        Console.WriteLine("введите количество компьютеров и этаж");
+                        int kom = Convert.ToInt32(Console.ReadLine());
+                        int f = Convert.ToInt32(Console.ReadLine());
+                        Menu.Sort3(kom, f);
+                        break;
+                    case 6:
+                        Console.WriteLine("введите номер корпуса, этаж и количество мест в аудитории");
+                        int km = Convert.ToInt32(Console.ReadLine());
+                        int fl = Convert.ToInt32(Console.ReadLine());
+                        int m = Convert.ToInt32(Console.ReadLine());
+                        Menu.Sort4(m, fl, km);
+                        break;
+                    case 7:
+                        Console.WriteLine("Введите номер аудитории, этаж и корпус для изменения данных");
+                        int r1 = Convert.ToInt32(Console.ReadLine());
+                        int r2 = Convert.ToInt32(Console.ReadLine());
+                        int r3 = Convert.ToInt32(Console.ReadLine());
+                        Menu.ChangeAud(r1, r2, r3);
+                        break;
+                    case 8:
+                        Menu.Info();
+                        break;
+                    case 9:
+                        Menu.Exit();
+                        break;
+                }
+            }
+        }
+    }
+}
