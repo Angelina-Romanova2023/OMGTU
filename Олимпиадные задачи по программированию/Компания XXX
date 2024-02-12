@@ -1,0 +1,42 @@
+f = open('input_s1_16.txt')
+disp = dict()
+spisok = list()
+i = 0
+ga=[]
+st = f.readline()
+while not("END" in st):
+    if (len(st)==5):
+        st=st[:-1]
+        ga[0] = st
+        ga[1]="Unknown Man"
+    else:
+        st = st.replace(' ','#',1)
+        ga = st.split('#')
+        ga[1]=ga[1][:-1]   
+    if ga[0] not in disp.keys():
+        disp[ga[0]] = ga[1]
+    if i%2 == 0:
+        k = ga[0]
+    else:
+        spisok.append((k,ga[0]))   
+    st = f.readline()
+    i+=1
+boss = f.readline()
+if boss not in disp.keys():
+    for i in disp.keys():
+        if disp[i] == boss:
+            boss = i
+            break    
+a = [boss]
+for i in a:
+    for j in spisok:
+        if i==j[0]:
+            a.append(j[1])
+a.remove(boss)
+if len(a) == 0:
+    print("NO")
+else:
+    a.sort()
+    for i in range(len(a)):
+        print(a[i],disp[a[i]])
+f.close()
