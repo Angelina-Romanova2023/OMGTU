@@ -1,0 +1,35 @@
+f=open('input7.txt')
+f=f.readlines()
+d=dict()
+k=0
+for i in f:
+    #print(k+1,i)
+    k=k+1
+    if "MIX" in i:
+        i=i.replace("MIX","")
+        i=i.replace(" ","")
+        i="MX"+i+"XM"
+    if "WATER" in i:
+        i=i.replace("WATER","")
+        i=i.replace(" ","")
+        i="WT"+i+"TW"
+    if "DUST" in i:
+        i=i.replace("DUST","")
+        i=i.replace(" ","")
+        i="DT"+i+"TD"
+    if "FIRE" in i:
+        i=i.replace("FIRE","")
+        i=i.replace(" ","")
+        i="FR"+i+"RF"
+    if "\n" in i:
+        i=i.replace("\n","")
+    d[k]=i
+    for i in range(1,k+1):
+        for j in range(1,k+1):
+            if str(j) in d[i]:
+                d[i]=d[i].replace(str(j),str(d[j]))
+print(d[k])
+f=open('output7.txt')
+f=f.readline()
+if str(d[k])==str(f):
+    #print("yes!")
