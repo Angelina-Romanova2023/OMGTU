@@ -1,0 +1,112 @@
+using System;
+using System.Linq;
+using System.Collections;
+namespace ConsoleApplication13
+{
+    class Menu
+    {
+        static public bool On = true;
+        public static void Show()
+        {
+            Console.WriteLine("Введите 1, чтобы заполнить SortedList");
+            Console.WriteLine("Введите 2, чтобы использовать IndexOfKey");
+            Console.WriteLine("Введите 3, чтобы использовать IndexOfValue");
+            Console.WriteLine("Введите 4, чтобы использовать Add");
+            Console.WriteLine("Введите 5, чтобы использовать GetKey");
+            Console.WriteLine("Введите 6, чтобы использовать GetKeyList");
+            Console.WriteLine("Введите 7, чтобы выйти");
+        }
+        public static void Option()
+        {
+            var d = new Basa(0);
+            while (On)
+            {
+                int k = Convert.ToInt32(Console.ReadLine());
+                switch (k)
+                {
+                    case 1:
+                        Console.WriteLine("Введите количество элементов SortedList");
+                        d = new Basa(Convert.ToInt32(Console.ReadLine()));
+                        break;
+                    case 2:
+                        Console.WriteLine("Ключ, индекс которого надо узнать:");
+                        Console.WriteLine(d.IndexOfKey(Convert.ToInt32(Console.ReadLine())));
+                        break;
+                    case 3:
+                        Console.WriteLine("Значение, индекс которого надо узнать:");
+                        Console.WriteLine(d.IndexOfValue(Convert.ToInt32(Console.ReadLine())));
+                        break;
+                    case 4:
+                        Console.WriteLine("введите количество добавляемых элементов");
+                        d.Add(Convert.ToInt32(Console.ReadLine()));
+                        break;
+                    case 5:
+                        Console.WriteLine("введите индекс для извлечения ключа");
+                        Console.WriteLine(d.GetKey(Convert.ToInt32(Console.ReadLine())));
+                        break;
+                    case 6:
+                        Console.WriteLine("введите индекс для извлечения значения");
+                        Console.WriteLine(d.GetByIndex(Convert.ToInt32(Console.ReadLine())));
+                        break;
+                    case 7:
+                        On = false;
+                        break;
+                }
+                Menu.Show();
+            }
+        }
+    }
+    class Basa
+    {
+        public SortedList a;
+        public Basa(int N)
+        {
+            this.a = new SortedList(N);
+            for (int i = 0; i < N; i++)
+            {
+                Console.WriteLine(i + "-й элемент:");
+                this.a.Add(Convert.ToInt32(Console.ReadLine()), Convert.ToInt32(Console.ReadLine()));
+            }
+            for (int i = 0; i < a.Count; i++)
+                Console.WriteLine(a.GetKey(i) + ":" + a.GetByIndex(i));
+            Console.WriteLine();
+        }
+        public int IndexOfKey(int t)
+        {
+            return a.IndexOfKey(t);
+        }
+        public int IndexOfValue(int t)
+        {
+            return a.IndexOfValue(t);
+        }
+        public void Add(int t)
+        {
+            for (int i = 1; i <= t; i++)
+            {
+                Console.WriteLine("введите новый элемент");
+                a.Add(Convert.ToInt32(Console.ReadLine()), Convert.ToInt32(Console.ReadLine()));
+            }
+            Console.WriteLine("теперь SortedList выглядит так:");
+            for (int i = 0; i < a.Count; i++)
+                Console.WriteLine(a.GetKey(i)+":"+a.GetByIndex(i));
+            Console.WriteLine();
+            return;
+        }
+        public object GetKey(int t)
+        {
+            return a.GetKey(t);
+        }
+        public object GetByIndex(int t)
+        {
+            return a.GetByIndex(t);
+        }
+    }
+    class Program
+    {
+        static void Main()
+        {
+            Menu.Show();
+            Menu.Option();
+        }
+    }
+}
