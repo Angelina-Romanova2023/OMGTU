@@ -1,0 +1,177 @@
+using System;
+using System.Linq;
+using System.Collections;
+namespace ConsoleApplication13
+{
+    class Menu
+    {
+        static public bool On = true;
+        public static void Show()
+        {
+            Console.WriteLine("Введите 1, чтобы заполнить ArrayList");
+            Console.WriteLine("Введите 2, чтобы использовать Count");
+            Console.WriteLine("Введите 3, чтобы использовать BinSearch");
+            Console.WriteLine("Введите 4, чтобы использовать Copy");
+            Console.WriteLine("Введите 5, чтобы использовать IndexOf");
+            Console.WriteLine("Введите 6, чтобы использовать Reverse");
+            Console.WriteLine("Введите 7, чтобы использовать Insert");
+            Console.WriteLine("Введите 8, чтобы использовать Sort");
+            Console.WriteLine("Введите 9, чтобы использовать Add");
+            Console.WriteLine("Введите 10, чтобы выйти");
+        }
+        public static void Option()
+        {
+            var d = new Basa(0);
+            while (On)
+            {
+                int k = Convert.ToInt32(Console.ReadLine());
+                switch (k)
+                {
+                    case 1:
+                        Console.WriteLine("Введите количество элементов массива");
+                        d = new Basa(Convert.ToInt32(Console.ReadLine()));
+                        break;
+                    case 2:
+                        Console.WriteLine(d.Count());
+                        break;
+                    case 3:
+                        Console.WriteLine("введите элемент для того, чтобы узнать позицию элемента в отсортированном массиве массиве (счет с 0)");
+                        Console.WriteLine(d.BinSearch(Convert.ToInt32(Console.ReadLine())));
+                        break;
+                    case 4:
+                        Console.WriteLine("Введите массив, в который будет происходить копирование");
+                        d.Copy();
+                        break;
+                    case 5:
+                        Console.WriteLine("введите элемент, чтобы узнать позицию");
+                        Console.WriteLine(d.IndexOf(Convert.ToInt32(Console.ReadLine())));
+                        break;
+                    case 6:
+                        d.Reverse();
+                        break;
+                    case 7:
+                        Console.WriteLine("введите позицию и элемент, который будет на этом месте");
+                        d.Insert(Convert.ToInt32(Console.ReadLine()));
+                        break;
+                    case 8:
+                        d.Sort();
+                        break;
+                    case 9:
+                        Console.WriteLine("введите количество добавляемых элементов");
+                        d.Add(Convert.ToInt32(Console.ReadLine()));
+                        break;
+                    case 10:
+                        On = false;
+                        break;
+                }
+                Menu.Show();
+            }
+        }
+    }
+    class Basa
+    {
+        public ArrayList a;
+        public Basa(int N)
+        {
+            this.a = new ArrayList(N);
+            for (int i = 0; i < N; i++)
+            {
+                Console.WriteLine(i + "-й элемент:");
+                this.a.Add(Convert.ToInt32(Console.ReadLine()));
+            }
+            foreach (int i in this.a)
+            {
+                Console.Write(i + " ");
+            }
+            Console.WriteLine(" ");
+
+        }
+        public int Count()
+        {
+            return a.Count;
+        }
+        public int BinSearch(int t)
+        {
+            a.Sort();
+            return a.BinarySearch(t);
+        }
+        public void Copy()
+        {
+            int[] t = new int[a.Count];
+            for (int i = 0; i < a.Count; i++)
+            {
+                Console.WriteLine(i + "-й элемент:");
+                t[i] = Convert.ToInt32(Console.ReadLine());
+            }
+            a.CopyTo(t,0);
+            Console.WriteLine("теперь доп.массив выглядит так:");
+            foreach (int i in t)
+            {
+                Console.Write(i + " ");
+            }
+            Console.WriteLine(" ");
+            return;
+        }
+        public int IndexOf(int t)
+        {
+            return a.IndexOf(t);
+        }
+        public void Reverse()
+        {
+            a.Reverse();
+            Console.WriteLine("теперь ArrayList выглядит так:");
+            foreach (Object i in a)
+            {
+                Console.Write(i + " ");
+            }
+            Console.WriteLine(" ");
+            return;
+        }
+        public void Insert(int t)
+        {
+            a.Insert(t,Convert.ToInt32(Console.ReadLine()));
+            Console.WriteLine("теперь ArrayList выглядит так:");
+            foreach (Object i in a)
+            {
+                Console.Write(i + " ");
+            }
+            Console.WriteLine(" ");
+            return;
+        }
+        public void Sort()
+        {
+            a.Sort();
+            Console.WriteLine("теперь ArrayList выглядит так:");
+            foreach (Object i in a)
+            {
+                Console.Write(i + " ");
+            }
+            Console.WriteLine(" ");
+            return;
+        }
+        public void Add(int t)
+        {
+            for (int i = 1; i <= t; i++)
+            {
+                Console.WriteLine("введите новый элемент");
+                a.Add(Convert.ToInt32(Console.ReadLine()));
+            }
+            Console.WriteLine("теперь ArrayList выглядит так:");
+            foreach (Object i in a)
+            {
+                Console.Write(i + " ");
+            }
+            Console.WriteLine(" ");
+            return;
+        }
+
+    }
+    class Program
+    {
+        static void Main()
+        {
+            Menu.Show();
+            Menu.Option();
+        }
+    }
+}
