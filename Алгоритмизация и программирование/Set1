@@ -1,0 +1,21 @@
+using System;
+using System.Collections;
+class Kukaracha
+{
+    static void Main()
+    {
+        Console.WriteLine("введите количество номеров");
+        int k = Convert.ToInt32(Console.ReadLine());
+        HashSet <string> hs = new HashSet<string>();
+        for ( int i=0;i<k;i++)
+        {
+            Console.WriteLine("введите номер и количество минут через пробел");
+            string s = Convert.ToString(Console.ReadLine());
+            string[] m = s.Split(' ');
+            hs.Add(m[0]);
+        }
+        Console.WriteLine("уникальные номера:");
+        foreach (string c in hs)
+            Console.WriteLine(c);
+    }
+}
