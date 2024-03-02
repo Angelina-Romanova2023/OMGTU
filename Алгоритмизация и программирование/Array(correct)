@@ -1,0 +1,178 @@
+using System;
+
+class Program
+{
+    static public bool On = true;
+
+    static public void Show()
+    {
+        Console.WriteLine("Введите 1, чтобы заполнить массив");
+        Console.WriteLine("Введите 2, чтобы использовать Count");
+        Console.WriteLine("Введите 3, чтобы использовать BinSearch");
+        Console.WriteLine("Введите 4, чтобы использовать Copy");
+        Console.WriteLine("Введите 5, чтобы использовать Find");
+        Console.WriteLine("Введите 6, чтобы использовать FindLast");
+        Console.WriteLine("Введите 7, чтобы использовать IndexOf");
+        Console.WriteLine("Введите 8, чтобы использовать Reverse");
+        Console.WriteLine("Введите 9, чтобы использовать Resize");
+        Console.WriteLine("Введите 10, чтобы использовать Sort");
+        Console.WriteLine("Введите 11, чтобы выйти");
+    }
+
+    static public void Option()
+    {
+        var d = new ArrayManager(0);
+        while (On)
+        {
+            int k = Convert.ToInt32(Console.ReadLine());
+            switch (k)
+            {
+                case 1:
+                    Console.WriteLine("Введите количество элементов массива");
+                    d = new ArrayManager(Convert.ToInt32(Console.ReadLine()));
+                    break;
+                case 2:
+                    Console.WriteLine("Введите элемент для того, чтобы узнать, сколько раз он встречается в массиве");
+                    Console.WriteLine(d.Count(Convert.ToInt32(Console.ReadLine())));
+                    break;
+                case 3:
+                    Console.WriteLine("Введите элемент для того, чтобы узнать позицию элемента в отсортированном массиве массиве (счет с 0)");
+                    Console.WriteLine(d.BinSearch(Convert.ToInt32(Console.ReadLine())));
+                    break;
+                case 4:
+                    Console.WriteLine("Введите количество элементов массива, а затем массив, который будет скопирован в данный");
+                    d.Copy(Convert.ToInt32(Console.ReadLine()));
+                    break;
+                case 5:
+                    Console.WriteLine("введите элемент");
+                    Console.WriteLine(d.Find(Convert.ToInt32(Console.ReadLine())));
+                    break;
+                case 6:
+                    Console.WriteLine("введите элемент");
+                    Console.WriteLine(d.FindLast(Convert.ToInt32(Console.ReadLine())));
+                    break;
+                case 7:
+                    Console.WriteLine("введите элемент, чтобы узнать позицию");
+                    Console.WriteLine(d.IndexOf(Convert.ToInt32(Console.ReadLine())));
+                    break;
+                case 8:
+                    d.Reverse();
+                    break;
+                case 9:
+                    Console.WriteLine("введите число, которое будет новой длинной массива");
+                    d.Resize(Convert.ToInt32(Console.ReadLine()));
+                    break;
+                case 10:
+                    d.Sort();
+                    break;
+                case 11:
+                    On = false;
+                    break;
+            }
+            Show();
+        }
+    }
+
+    static void Main()
+    {
+        Show();
+        Option();
+    }
+}
+
+class ArrayManager
+{
+    private int[] a;
+
+    public ArrayManager(int N)
+    {
+        this.a = new int[N];
+        for (int i = 0; i < N; i++)
+        {
+            Console.WriteLine(i + "-й элемент:");
+            this.a[i] = Convert.ToInt32(Console.ReadLine());
+        }
+        foreach (var i in this.a)
+        {
+            Console.Write(i + " ");
+        }
+        Console.WriteLine(" ");
+    }
+
+    public int Count(int t)
+    {
+        return Array.FindAll(this.a, o => o == t).Length;
+    }
+
+    public int BinSearch(int t)
+    {
+        Array.Sort(this.a);
+        return Array.BinarySearch(this.a, t);
+    }
+
+    public void Copy(int N)
+    {
+        int[] t = new int[N];
+        for (int i = 0; i < N; i++)
+        {
+            Console.WriteLine(i + "-й элемент:");
+            t[i] = Convert.ToInt32(Console.ReadLine());
+        }
+        Array.Copy(t, this.a, t.Length);
+        Console.WriteLine("теперь массив выглядит так:");
+        foreach (var i in this.a)
+        {
+            Console.Write(i + " ");
+        }
+        Console.WriteLine(" ");
+    }
+
+    public int Find(int t)
+    {
+        return Array.FindIndex(this.a, o => o == t);
+    }
+
+    public int FindLast(int t)
+    {
+        int k = Array.FindLastIndex(this.a, o => o == t);
+        return k;
+    }
+
+    public int IndexOf(int t)
+    {
+        return Array.IndexOf(this.a, t);
+    }
+
+    public void Reverse()
+    {
+        Array.Reverse(this.a);
+        Console.WriteLine("теперь массив выглядит так:");
+        foreach (var i in this.a)
+        {
+            Console.Write(i + " ");
+        }
+        Console.WriteLine(" ");
+    }
+
+    public void Resize(int t)
+    {
+        Array.Resize(ref this.a, t);
+        Console.WriteLine("теперь массив выглядит так:");
+        foreach (var i in this.a)
+        {
+            Console.Write(i + " ");
+        }
+        Console.WriteLine(" ");
+    }
+
+    public void Sort()
+    {
+        Array.Sort(this.a);
+        Console.WriteLine("теперь массив выглядит так:");
+        foreach (var i in this.a)
+        {
+            Console.Write(i + " ");
+        }
+        Console.WriteLine(" ");
+    }
+}
