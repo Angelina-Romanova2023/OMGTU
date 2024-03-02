@@ -1,0 +1,158 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Xml;
+class Kukaracha
+{
+    static void Main()
+    {
+        //вносим данные в очередь
+        Console.WriteLine("количество разговоров:");
+        int k = Convert.ToInt32(Console.ReadLine());
+        Queue q = new Queue();
+        for (int i = 0; i < k; i++)
+        {
+            Console.WriteLine("номер_время начала разговора_день_количество минут (данные записываются через пробел)");
+            q.Enqueue(Convert.ToString(Console.ReadLine()));
+        }
+
+        //задание 1
+        Console.WriteLine("задание 1");
+        //вывод через хэштаблицу
+        Console.WriteLine("вывод через хэштаблицу");
+        Hashtable ht = new Hashtable();
+        foreach (object i in q)
+        {
+            string s = (string)i;
+            string[] m = s.Split(' ');
+            int d = 0;
+            string j = "";
+            foreach (DictionaryEntry c in ht)
+            {
+                if (Equals((m[0]),c.Key))
+                {
+                    d = Convert.ToInt32(c.Value);
+                    j = (string)c.Key;
+                }
+            }
+            if (ht.ContainsKey(m[0]))
+            {
+                int t = d + Int32.Parse(m[m.Length - 1]);
+                ht.Remove(j);
+                ht.Add(m[0], (object)t);
+            }
+            else
+            {
+                ht.Add(m[0], (object)(m[m.Length - 1]));
+            }
+        }
+        foreach (DictionaryEntry c in ht)
+        {
+            Console.WriteLine("Номер: " + c.Key + ", Общее время разговора: " + c.Value);
+        }
+
+        //вывод через словарь
+        Console.WriteLine("Вывод через словарь");
+        Dictionary<string, string> dict = new Dictionary<string, string>();
+        foreach (object i in q)
+        {
+            string s = (string)i;
+            string[] m = s.Split(' ');
+            int d = 0;
+            string j = "";
+            ICollection<string> c = dict.Keys;
+            foreach (string str in c)
+            {
+                if (Equals((m[0]), str))
+                {
+                    d = Convert.ToInt32(dict[m[0]]);
+                    j = (string)m[0];
+                }
+            }
+            if (dict.ContainsKey(m[0]))
+            {
+                int t = d + Int32.Parse(m[m.Length - 1]);
+                string h = Convert.ToString(t);
+                dict.Remove(j);
+                dict.Add(m[0], h);
+            }
+            else
+            {
+                dict.Add(m[0], m[m.Length - 1]);
+            }
+        }
+        foreach (KeyValuePair<string, string> kvp in dict)
+        {
+            Console.WriteLine("Номер = {0}, Общее количество минут = {1}", kvp.Key, kvp.Value);
+        }
+
+        //Задание 2
+        Console.WriteLine("задание 2");
+        Console.WriteLine("Вывод через хэштаблицу");
+        Hashtable ht1 = new Hashtable();
+        foreach (object i in q)
+        {
+            string s = (string)i;
+            string[] m = s.Split(' ');
+            int d = 0;
+            string j = "";
+            foreach (DictionaryEntry c in ht1)
+            {
+                if (Equals((m[m.Length - 2]), c.Key))
+                {
+                    d = Convert.ToInt32(c.Value);
+                    j = (string)c.Key;
+                }
+            }
+            if (ht1.ContainsKey(m[m.Length - 2]))
+            {
+                int t = d + Int32.Parse(m[m.Length - 1]);
+                ht1.Remove(j);
+                ht1.Add(m[m.Length - 2], (object)t);
+            }
+            else
+            {
+                ht1.Add(m[m.Length - 2], (object)(m[m.Length - 1]));
+            }
+        }
+        foreach (DictionaryEntry c in ht1)
+        {
+            Console.WriteLine("Дата: " + c.Key + ", Общее время разговора: " + c.Value);
+        }
+
+        //вывод через словарь
+        Console.WriteLine("Вывод через словарь");
+        Dictionary<string, string> dict1 = new Dictionary<string, string>();
+        foreach (object i in q)
+        {
+            string s = (string)i;
+            string[] m = s.Split(' ');
+            int d = 0;
+            string j = "";
+            ICollection<string> c = dict1.Keys;
+            foreach (string str in c)
+            {
+                if (Equals((m[m.Length - 2]), str))
+                {
+                    d = Convert.ToInt32(dict1[m[m.Length - 2]]);
+                    j = (string)m[m.Length - 2];
+                }
+            }
+            if (dict1.ContainsKey(m[m.Length - 2]))
+            {
+                int t = d + Int32.Parse(m[m.Length - 1]);
+                string h = Convert.ToString(t);
+                dict1.Remove(j);
+                dict1.Add(m[m.Length - 2], h);
+            }
+            else
+            {
+                dict1.Add(m[m.Length - 2], m[m.Length - 1]);
+            }
+        }
+        foreach (KeyValuePair<string, string> kvp in dict1)
+        {
+            Console.WriteLine("Дата = {0}, Общее количество минут = {1}", kvp.Key, kvp.Value);
+        }
+    }
+}
