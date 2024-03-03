@@ -1,0 +1,70 @@
+using System;
+using System.Collections.Generic;
+namespace ConsoleApplication
+{
+    class Program
+    {
+        static void Main()
+        {
+            SortedSet<string> ss1 = new SortedSet<string>();
+            Console.WriteLine("введите количество элементов в 1 множестве");
+            int k1 = Convert.ToInt32(Console.ReadLine());
+            for (int i = 0; i < k1; i++)
+            {
+                Console.WriteLine($"введите {i}-ый элемент 1 множества");
+                ss1.Add(Convert.ToString(Console.ReadLine()));
+            }
+            SortedSet<string> ss2 = new SortedSet<string>();
+            Console.WriteLine("введите количество элементов в 2 множестве");
+            int k2 = Convert.ToInt32(Console.ReadLine());
+            for (int i = 0; i < k2; i++)
+            {
+                Console.WriteLine($"введите {i}-ый элемент 2 множества");
+                ss2.Add(Convert.ToString(Console.ReadLine()));
+            }
+            SortedSet<string> ss3 = new SortedSet<string>();
+            Console.WriteLine("введите количество элементов в 3 множестве");
+            int k3 = Convert.ToInt32(Console.ReadLine());
+            for (int i = 0; i < k3; i++)
+            {
+                Console.WriteLine($"введите {i}-ый элемент 3 множества");
+                ss3.Add(Convert.ToString(Console.ReadLine()));
+            }
+            ShowColl(ss1, "Первое множество:");
+            ShowColl(ss2, "Второе множество:");
+            ShowColl(ss3, "Третье множество:");
+            SortedSet<string> ob = new SortedSet<string>();
+            SortedSet<string> per = new SortedSet<string>();
+            ob.UnionWith(ss1);
+            ob.UnionWith(ss2);
+            ob.UnionWith(ss3);
+            per.UnionWith(ob);
+
+            ShowColl(ob, "Объединение множеств:");
+
+            ob.SymmetricExceptWith(ss1);
+            ShowColl(ob, "Дополнение для 1 множества:");
+            per.IntersectWith(ss1);
+            ob.UnionWith(ss1);
+
+            ob.SymmetricExceptWith(ss2);
+            ShowColl(ob, "Дополнение для 2 множества:");
+            per.IntersectWith(ss2);
+            ob.UnionWith(ss2);
+
+            ob.SymmetricExceptWith(ss3);
+            ShowColl(ob, "Дополнение для 3 множества:");
+            per.IntersectWith(ss3);
+            ob.UnionWith(ss3);
+
+            ShowColl(per, "Пересечение множеств:");
+        }
+        static void ShowColl(SortedSet<string> ss, string s)
+        {
+            Console.WriteLine(s);
+            foreach (string ch in ss)
+                Console.Write(ch + " ");
+            Console.WriteLine("\n");
+        }
+    }
+}
