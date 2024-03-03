@@ -1,0 +1,83 @@
+using System;
+using System.Collections.Generic;
+
+class Graph
+{
+    private int V; // Количество вершин
+    private List<int>[] adj; // Список смежности
+
+    public Graph(int v)
+    {
+        V = v;
+        adj = new List<int>[v];
+        for (int i = 0; i < v; ++i)
+        {
+            adj[i] = new List<int>();
+        }
+    }
+
+    public void AddEdge(int v, int w)
+    {
+        adj[v].Add(w);  // Добавление вершины w в список смежности вершины v
+    }
+
+    public void U(int v, bool[] visited)
+    {
+        visited[v] = true;
+        //Console.WriteLine("Посещена вершина " + v);
+
+        foreach (int n in adj[v])
+        {
+            if (!visited[n])
+            {
+                U(n, visited);
+            }
+        }
+    }
+    public int CountComponents()
+    {
+        bool[] visited = new bool[V];
+        int count = 0;
+
+        for (int v = 0; v < V; v++)
+        {
+            if (!visited[v])
+            {
+                U(v, visited);
+                count++;
+            }
+        }
+
+        return count;
+    }
+
+    public void DFS(int v)
+    {
+        bool[] visited = new bool[V];
+
+        U(v, visited);
+    }
+}
+
+class Program
+{
+    public static void Main()
+    {
+        Console.WriteLine("введите количсетво вершин");
+        int k = Convert.ToInt32(Console.ReadLine());
+        Graph graph = new Graph(k);
+        Console.WriteLine("введите количество ребер");
+        int e = Convert.ToInt32(Console.ReadLine());
+        for (int i = 0; i < e; i++)
+        {
+            Console.WriteLine($"введите {i} реброе");
+            graph.AddEdge(Convert.ToInt32(Console.ReadLine())-1, Convert.ToInt32(Console.ReadLine())-1);
+        }
+        Console.WriteLine("С какой вершины нужно начать?");
+        int v = Convert.ToInt32(Console.ReadLine());
+        //Console.WriteLine("Результат обхода в глубину:");
+        graph.DFS(v);
+        int components = graph.CountComponents();
+        Console.WriteLine("Количество компонент связности: " + components);
+    }
+}
