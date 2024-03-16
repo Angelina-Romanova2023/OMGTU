@@ -1,0 +1,75 @@
+using System;
+using System.Collections.Generic;
+class DijkstraAlgorithm
+{
+    class Edge
+    {
+        public int To;
+        public int Weight;
+        public Edge(int to, int weight)
+        {
+            To = to;
+            Weight = weight;
+        }
+    }
+    Dictionary<int, List<Edge>> graph = new Dictionary<int, List<Edge>>();
+    void AddEdge(int from, int to, int weight)
+    {
+        if (!graph.ContainsKey(from))
+        {
+            graph[from] = new List<Edge>();
+        }
+        if (!graph.ContainsKey(to))
+        {
+            graph[to] = new List<Edge>();
+        }
+        graph[from].Add(new Edge(to, weight));
+        graph[to].Add(new Edge(from, weight)); 
+    }
+    void Dijkstra(int start)
+    {
+        SortedSet<(int, int)> pq = new SortedSet<(int, int)>();
+        Dictionary<int, int> dist = new Dictionary<int, int>();
+        foreach (var key in graph.Keys)
+        {
+            dist[key] = int.MaxValue;
+        }
+        dist[start] = 0;
+        pq.Add((0, start));
+        while (pq.Count > 0)
+        {
+            (int d, int u) = pq.Min;
+            pq.Remove(pq.Min);
+            if (d > dist[u]) continue;
+            foreach (var edge in graph[u])
+            {
+                int v = edge.To;
+                int weight = edge.Weight;
+                if (dist[u] + weight < dist[v])
+                {
+                    dist[v] = dist[u] + weight;
+                    pq.Add((dist[v], v));
+                }
+            }
+        }
+        Console.WriteLine("Вершина \t Расстояние от начальной точки");
+        foreach (var kvp in dist)
+        {
+            Console.WriteLine(kvp.Key + " \t\t " + kvp.Value);
+        }
+    }
+    public static void Main()
+    {
+        DijkstraAlgorithm d = new DijkstraAlgorithm();
+        Console.WriteLine("введите количество ребер");
+        int N = Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine("(вершины с нуля)");
+        for ( int i = 0; i < N; i++ )
+        {
+            Console.WriteLine("введите вершину 1, вершину 2, длину ребра (через Enter)");
+            d.AddEdge(Convert.ToInt32(Console.ReadLine()), Convert.ToInt32(Console.ReadLine()), Convert.ToInt32(Console.ReadLine()));
+        }
+        Console.WriteLine("введите вершину, с которой нужно начать");
+        d.Dijkstra(Convert.ToInt32(Console.ReadLine()));
+    }
+}
