@@ -66,7 +66,7 @@ class DijkstraAlgorithm
         Console.WriteLine("(вершины с нуля)");
         for ( int i = 0; i < N; i++ )
         {
-            Console.WriteLine("введите вершину 1, вершину 2, длину ребра (через Enter)");
+            Console.WriteLine("введите первую вершину, вторую вершину, длину ребра (через Enter)");
             d.AddEdge(Convert.ToInt32(Console.ReadLine()), Convert.ToInt32(Console.ReadLine()), Convert.ToInt32(Console.ReadLine()));
         }
         Console.WriteLine("введите вершину, с которой нужно начать");
