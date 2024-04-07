@@ -1,0 +1,52 @@
+fa=open('input_s1_07.txt')
+fa=fa.readlines()
+#первая строка - кол-во волшебных слов n
+for i in fa:
+    n=i
+    break
+n=int(n)
+k=-1
+slova=[]
+for i in fa:
+    k+=1
+    if k>n:
+        f=i
+        break
+    if k>0:
+        slova.append(i[:-1])
+f=int(f)
+k=-1
+start=[]
+for i in fa:
+    k+=1
+    if k>n+f+1:
+        l=i
+        break
+    if k>n+1:
+        start.append(i[:-1])
+l=int(l)
+final=[]
+k=-1
+for i in fa:
+    k+=1
+    if k>n+f+2 and k<n+f+l+2:
+        final.append(i[:-1])
+final.append(i)
+startn=[]
+for i in start:
+    for j in range(1,int(i[2:])+1):
+        startn.append(i[0])
+finaln=[]
+for i in final:
+    for j in range(1,int(i[2:])+1):
+        finaln.append(i[0])
+k=0
+vm=0
+slovan=[]
+for i in slova:
+    if ((i[0] in startn) and (i[-1] in finaln)):
+        vm+=1
+        startn.remove(i[0])
+        finaln.remove(i[-1])
+        slovan.append(i)
+print(vm)
