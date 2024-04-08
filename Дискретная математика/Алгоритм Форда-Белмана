@@ -1,0 +1,46 @@
+print("Алгоритм Форда-Беллмана")
+print("От какой вершины искать минимальные пути?")
+y = int(input())-1
+
+f = open('f.txt')
+n = int(f.readline()[:-1])
+Tab = []
+for i in range(n):
+    Tab.append(f.readline().replace("\n",'').split(' '))
+f.close()
+
+lam = [float('inf') for _ in range(n)]
+prev = [-1 for _ in range(n)]
+lam[y] = 0
+
+for k in range(n-1):
+    for i in range(n):
+        for j in range(n):
+            if Tab[i][j]!='x' and lam[i] + int(Tab[i][j]) < lam[j]:
+                lam[j] = lam[i] + int(Tab[i][j])
+                prev[j] = i
+
+negative_cycle = False
+
+for i in range(n):
+    for j in range(n):
+        if Tab[i][j]!='x' and lam[i] + int(Tab[i][j]) < lam[j]:
+            negative_cycle = True
+            break
+            
+if not negative_cycle:
+    print("Минимальные расстояния от вершины", y+1, "до остальных вершин:")
+    for i in range(n):
+        print("Вершина", i+1, ":", lam[i])
+        
+    print("Восстановление путей:")
+    for i in range(n):
+        path = []
+        dest = i
+        while dest != -1:
+            path.append(dest+1)
+            dest = prev[dest]
+        path.reverse()
+        print("От вершины", y+1, "до вершины", i+1, ":", path)
+else:
+    print("Обнаружен отрицательный контур")
