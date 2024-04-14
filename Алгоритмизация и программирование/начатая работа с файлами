@@ -1,0 +1,90 @@
+class Basa
+{
+    public string Fam { get; set; }
+    public string Name { get; set; }
+    public string Bat { get; set; }
+    public string Nom { get; set; }
+    public string Cit { get; set; }
+    public Basa(string Fam, string Name, string Bat, string Nom, string Cit)
+    {
+        this.Fam = Fam;
+        this.Name = Name;
+        this.Bat = Bat;
+        this.Nom = Nom;
+        this.Cit = Cit;
+    }
+    public string getInformation(Basa basa)
+    {
+        if (basa != null)
+        {
+            return basa.Fam + "  " + basa.Name + "  " + basa.Bat + "  " + basa.Nom + "  " + basa.Cit;
+        }
+        else
+        {
+            return " ";
+        }
+    }
+    public Basa sortedByCit(Basa basa, string sortcit)
+    {
+        if (basa.Cit.Equals(sortcit))
+        {
+            return basa;
+        }
+        else
+        {
+            return null;
+        }
+    }
+    public Basa sortedByFam(Basa basa, string sortfam)
+    {
+        if (basa.Fam.Equals(sortfam))
+        {
+            return basa;
+        }
+        else
+        {
+            return null;
+        }
+    }
+    public Basa sortedByFIOCit(Basa basa, string sf, string sn, string sb, string sc)
+    {
+        if ((basa.Fam.Equals(sf)) && (basa.Name.Equals(sn)) && (basa.Bat.Equals(sb)) && (basa.Cit.Equals(sc)))
+        {
+            return basa;
+        }
+        else
+        {
+            return null;
+        }
+    }
+}
+class FileWork
+{
+    static void Main()
+    {
+        Basa[] basa = new Basa[2];
+        String line;
+        try
+        {
+            StreamReader sr = new StreamReader("C:\\Users\\HUAWEI\\Desktop\\алг.txt");
+            line = sr.ReadLine();
+            while (line != null)
+            {
+                Console.WriteLine(line);
+                //Read the next line
+                line = sr.ReadLine();
+            }
+            //close the file
+            sr.Close();
+            Console.ReadLine();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Exception: " + e.Message);
+        }
+        finally
+        {
+            Console.WriteLine("Executing finally block.");
+        }
+    }
+}
