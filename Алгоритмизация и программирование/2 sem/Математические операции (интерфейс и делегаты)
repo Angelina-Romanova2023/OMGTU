@@ -1,0 +1,101 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApplication19
+{
+    interface Mathem
+    {
+        delegate double Res1(int a);
+        public delegate int Res2(int a, int b);
+    }
+    class Program : Mathem
+    {
+        public delegate double Res1(int a);
+        public delegate int Res2(int a, int b);
+        public static int Summa(int x, int y)
+        {
+            return (x + y);
+        }
+        public static int NeSumma(int x, int y)
+        {
+            return (x - y);
+        }
+        public static int Umnoj(int x, int y)
+        {
+            return (x * y);
+        }
+        public static int Podel(int x, int y)
+        {
+            if (y == 0)
+                throw new ArgumentException("На ноль делить нельзя!");
+            else
+                return (x / y);
+        }
+        public static double Sinus(int x)
+        {
+            return (Math.Sin(x));
+        }
+        public static double Cosinus(int x)
+        {
+            return (Math.Cos(x));
+        }
+        public static double Koren(int x)
+        {
+            if (x < 0)
+                throw new ArgumentException("Извините, я не работаю с комплексными числами");
+            else
+                return (Math.Sqrt(x));
+        }
+        static void Main(string[] args)
+        {
+            Console.WriteLine("введите: 1 - сумма, 2 - разность, 3 - умножение, 4 - деление, 5 - sin, 6 - cos, 7 - извлечение квадратного корня");
+            int i = Convert.ToInt32(Console.ReadLine());
+            switch (i)
+            {
+                case 1:
+                    Console.WriteLine("введите два числа");
+                    Res2 res2;
+                    res2 = Summa;
+                    Console.WriteLine(Summa(Convert.ToInt32(Console.ReadLine()), Convert.ToInt32(Console.ReadLine())));
+                    break;
+                case 2:
+                    Console.WriteLine("введите два числа");
+                    res2 = NeSumma;
+                    Console.WriteLine(NeSumma(Convert.ToInt32(Console.ReadLine()), Convert.ToInt32(Console.ReadLine())));
+                    break;
+                case 3:
+                    Console.WriteLine("введите два числа");
+                    res2 = Umnoj;
+                    Console.WriteLine(Umnoj(Convert.ToInt32(Console.ReadLine()), Convert.ToInt32(Console.ReadLine())));
+                    break;
+                case 4:
+                    Console.WriteLine("введите два числа");
+                    res2 = Podel;
+                    Console.WriteLine(Podel(Convert.ToInt32(Console.ReadLine()), Convert.ToInt32(Console.ReadLine())));
+                    break;
+                case 5:
+                    Console.WriteLine("введите число");
+                    Res1 res1;
+                    res1 = Sinus;
+                    Console.WriteLine(Sinus(Convert.ToInt32(Console.ReadLine())));
+                    break;
+                case 6:
+                    Console.WriteLine("введите число");
+                    res1 = Cosinus;
+                    Console.WriteLine(Cosinus(Convert.ToInt32(Console.ReadLine())));
+                    break;
+                case 7:
+                    Console.WriteLine("введите число");
+                    res1 = Koren;
+                    Console.WriteLine(Koren(Convert.ToInt32(Console.ReadLine())));
+                    break;
+                default:
+                    Console.WriteLine("NaN");
+                    break;
+            }
+        }
+    }
+}
