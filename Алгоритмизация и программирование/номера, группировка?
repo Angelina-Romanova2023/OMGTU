@@ -1,0 +1,119 @@
+using System;
+using System.Runtime.ExceptionServices;
+class Nomera
+{
+    private int Nom1 { get; set; }
+    public int Nom2 { get; set; }
+    private string Date { get; set; }
+    private int K { get; set; }
+
+    public Nomera(int Nom1, int Nom2, string Date, int K)
+    {
+        this.Nom1 = Nom1;
+        this.Nom2 = Nom2;
+        this.Date = Date;
+        this.K = K;
+    }
+    public string getInformation(Nomera nomera)//Для получения всей информации об экземпляре
+    {
+        if (nomera != null)
+        {
+            return " " + nomera.Nom1 + "  " + nomera.Nom2 + "  " + nomera.Date + "  " + nomera.K;
+        }
+        else
+        {
+            return " ";
+        }
+    }
+    public int getNom2(Nomera nomera)
+    {
+        if (nomera != null)
+        {
+            return nomera.Nom2;
+        }
+        else
+            return 0;
+    }
+    public string getDate(Nomera nomera)
+    {
+        if (nomera != null)
+        {
+            return nomera.Date;
+        }
+        else
+            return null;
+    }
+
+    public Nomera sortedByNom(Nomera nomera, int nom)
+    {
+        if (nomera.Nom1 == nom)
+        {
+            return nomera;
+        }
+        else
+        {
+            return null;
+        }
+    }
+    public static void SortByDate(Nomera[] nomera)
+    {
+        Array.Sort(nomera, (x, y) => DateTime.Compare(DateTime.Parse(x.Date), DateTime.Parse(y.Date)));
+    }
+}
+
+
+class program
+{
+    static void Main()
+    {
+        Console.WriteLine("k=");
+        int k = Convert.ToInt32(Console.ReadLine());
+        Nomera[] nomera = new Nomera[k];
+        for (int i = 0; i < nomera.Length; i++)
+        {
+            Console.WriteLine("nom1 nom2 date kolich");
+            nomera[i] = new Nomera(Convert.ToInt32(Console.ReadLine()), Convert.ToInt32(Console.ReadLine()), Convert.ToString(Console.ReadLine()), Convert.ToInt32(Console.ReadLine()));
+        }
+        Console.WriteLine("v=(nom)");
+        int v = Convert.ToInt32(Console.ReadLine());
+        int[] a = new int[k];
+        string[] s = new string[k];
+        for (int i = 0; i < nomera.Length; i++)
+        {
+            if (nomera[i].sortedByNom(nomera[i], v) != null)
+            {
+                a[i] = nomera[i].getNom2(nomera[i]);
+                s[i] = nomera[i].getDate(nomera[i]);
+            }
+        }
+        Dictionary<int, int> countMap = new Dictionary<int, int>();
+        for (int i = 0; i < a.Length; i++)
+        {
+            if (countMap.ContainsKey(a[i]))
+            {
+                countMap[a[i]]++;
+            }
+            else
+            {
+                countMap[a[i]] = 1;
+            }
+        }
+        int maxCount = 0;
+        int mostElement = 0;
+        foreach (var kvp in countMap)
+        {
+            if (kvp.Value > maxCount)
+            {
+                maxCount = kvp.Value;
+                mostElement = kvp.Key;
+            }
+        }
+        Console.WriteLine("база данных, отсортированная по датам:");
+        Nomera.SortByDate(nomera);
+        for (int i = 0; i < nomera.Length; i++)
+        {
+            Console.WriteLine(nomera[i].getInformation(nomera[i]));
+        }
+        Console.WriteLine("На данный номер чаще всего звонил выбранный абонент: " + mostElement);
+    }
+}
