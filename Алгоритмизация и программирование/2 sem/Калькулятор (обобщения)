@@ -1,0 +1,100 @@
+using System;
+
+class Calculator<T>
+{
+    public void Sum(T x, T y)
+    {
+        dynamic a = x;
+        dynamic b = y;
+        dynamic result = a + b;
+        Console.WriteLine("Результат сложения: " + result);
+    }
+
+    public void Razn(T x, T y)
+    {
+        dynamic a = x;
+        dynamic b = y;
+        dynamic result = a - b;
+        Console.WriteLine("Результат вычитания: " + result);
+    }
+
+    public void Umn(T x, T y)
+    {
+        dynamic a = x;
+        dynamic b = y;
+        dynamic result = a * b;
+        Console.WriteLine("Результат умножения: " + result);
+    }
+
+    public void Del(T x, T y)
+    {
+        dynamic a = x;
+        dynamic b = y;
+        if (b != 0)
+        {
+            dynamic result = a / b;
+            Console.WriteLine("Результат деления: " + result);
+        }
+        else
+        {
+            Console.WriteLine("Деление на ноль невозможно!!!");
+        }
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        Console.WriteLine("Выберите тип данных: 1 - целые числа; 2 - вещественные числа");
+        int tip = Convert.ToInt32(Console.ReadLine());
+        if (tip == 1)
+        {
+            Calculator<int> intCalculator = new Calculator<int>(); // Работа с целыми числами
+            Console.WriteLine("введите номер нужной операции: 1 - сложение; 2 - разность; 3 - умножение; 4 - деление");
+            int op = Convert.ToInt32(Console.ReadLine());
+            switch (op)
+            {
+                case 1:
+                    intCalculator.Sum(Convert.ToInt32(Console.ReadLine()), Convert.ToInt32(Console.ReadLine()));
+                    break;
+                case 2:
+                    intCalculator.Razn(Convert.ToInt32(Console.ReadLine()), Convert.ToInt32(Console.ReadLine()));
+                    break;
+                case 3:
+                    intCalculator.Umn(Convert.ToInt32(Console.ReadLine()), Convert.ToInt32(Console.ReadLine()));
+                    break;
+                case 4:
+                    intCalculator.Del(Convert.ToInt32(Console.ReadLine()), Convert.ToInt32(Console.ReadLine()));
+                    break;
+                default:
+                    Console.WriteLine("наверное, Вы промахнулись по кнопке, попробуйте ещё разок");
+                    break;
+            }
+        }
+        else if (tip == 2)
+        {
+            Calculator<double> doubleCalculator = new Calculator<double>(); // Работа с вещественными числами
+            Console.WriteLine("введите номер нужной операции: 1 - сложение; 2 - разность; 3 - умножение; 4 - деление");
+            int op = Convert.ToInt32(Console.ReadLine());
+            switch (op)
+            {
+                case 1:
+                    doubleCalculator.Sum(Convert.ToDouble(Console.ReadLine()), Convert.ToDouble(Console.ReadLine()));
+                    break;
+                case 2:
+                    doubleCalculator.Razn(Convert.ToDouble(Console.ReadLine()), Convert.ToDouble(Console.ReadLine()));
+                    break;
+                case 3:
+                    doubleCalculator.Umn(Convert.ToDouble(Console.ReadLine()), Convert.ToDouble(Console.ReadLine()));
+                    break;
+                case 4:
+                    doubleCalculator.Del(Convert.ToDouble(Console.ReadLine()), Convert.ToDouble(Console.ReadLine()));
+                    break;
+                default:
+                    Console.WriteLine("наверное, Вы промахнулись по кнопке, попробуйте ещё разок");
+                    break;
+            }
+        }
+    }
+}
