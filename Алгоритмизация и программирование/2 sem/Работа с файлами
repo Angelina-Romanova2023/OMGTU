@@ -1,0 +1,161 @@
+class Basa
+{
+    public string Fam { get; set; }
+    public string Name { get; set; }
+    public string Bat { get; set; }
+    public string Nom { get; set; }
+    public string Cit { get; set; }
+    public Basa(string Fam, string Name, string Bat, string Nom, string Cit)
+    {
+        this.Fam = Fam;
+        this.Name = Name;
+        this.Bat = Bat;
+        this.Nom = Nom;
+        this.Cit = Cit;
+    }
+    public string getInformation(Basa basa)
+    {
+        if (basa != null)
+        {
+            return basa.Fam + "  " + basa.Name + "  " + basa.Bat + "  " + basa.Nom + "  " + basa.Cit;
+        }
+        else
+        {
+            return " ";
+        }
+    }
+    public Basa sortedByCit(Basa basa, string sortcit)
+    {
+        if (basa.Cit.Equals(sortcit))
+        {
+            return basa;
+        }
+        else
+        {
+            return null;
+        }
+    }
+    public Basa sortedByFam(Basa basa, string sortfam)
+    {
+        if (basa.Fam.Equals(sortfam))
+        {
+            return basa;
+        }
+        else
+        {
+            return null;
+        }
+    }
+    public Basa sortedByFIOCit(Basa basa, string sf, string sn, string sb, string sc)
+    {
+        if ((basa.Fam.Equals(sf)) && (basa.Name.Equals(sn)) && (basa.Bat.Equals(sb)) && (basa.Cit.Equals(sc)))
+        {
+            return basa;
+        }
+        else
+        {
+            return null;
+        }
+    }
+}
+
+class FileWork
+{
+    static void Main()
+    {
+        int count = 0;
+        try
+        {
+            StreamReader sr = new StreamReader("C:\\Users\\HUAWEI\\Desktop\\алг.txt");
+            count = System.IO.File.ReadAllLines("C:\\Users\\HUAWEI\\Desktop\\алг.txt").Length;
+            sr.Close();
+        }
+        catch { }
+        finally { }
+
+
+        Basa[] basa = new Basa[count];
+        string[] basa1 = new string[count];
+        String line;
+        try
+        {
+            StreamReader sr = new StreamReader("C:\\Users\\HUAWEI\\Desktop\\алг.txt");
+            line = sr.ReadLine();
+            for (int i = 0; i <= count; i++)
+            {
+                basa1[i] = line;
+                line = sr.ReadLine();
+            }
+            sr.Close();
+        }
+        catch { }
+        finally { }
+        string[] str= new string[5];
+        for (var i =0;i < basa1.Length; i++)
+        {
+            str = basa1[i].Split(" ");
+            basa[i] = new Basa(str[0], str[1], str[2], str[3], str[4]);
+        }
+        /*for (int i = 0; i < basa.Length; i++)
+        {
+            Console.WriteLine(basa[i].getInformation(basa[i]));
+        
+        }*/
+
+        //city
+        string path1 = @"C:\\Users\\HUAWEI\\Desktop\\алг1.txt";
+        using (FileStream fs = File.Create(path1))
+        Console.WriteLine("Введите город для сортировки");
+        string sortcit = Convert.ToString(Console.ReadLine());
+        List<string> list1 = new List<string>();
+        Console.WriteLine("В файл алг1.txt на Вашем рабочем столе по данной сортировке будут занесены следующие данные:");
+        for (int i = 0; i < basa.Length; i++)
+        {
+            if (basa[i].sortedByCit(basa[i], sortcit) != null)
+            {
+                Console.WriteLine(basa[i].getInformation(basa[i]));
+                list1.Add(basa[i].getInformation(basa[i]));
+            }
+        }
+        File.AppendAllLines(@"C:\\Users\\HUAWEI\\Desktop\\алг1.txt", list1);
+
+
+        //fam
+        string path2 = @"C:\\Users\\HUAWEI\\Desktop\\алг2.txt";
+        using (FileStream fs = File.Create(path2))
+        Console.WriteLine("Введите фамилию для сортировки");
+        string sortfam = Convert.ToString(Console.ReadLine());
+        List<string> list2 = new List<string>();
+        Console.WriteLine("В файл алг2.txt на Вашем рабочем столе по данной сортировке будут занесены следующие данные:");
+        for (int i = 0; i < basa.Length; i++)
+        {
+            if (basa[i].sortedByFam(basa[i], sortfam) != null)
+            {
+                Console.WriteLine(basa[i].getInformation(basa[i]));
+                list2.Add(basa[i].getInformation(basa[i]));
+            }
+        }
+        File.AppendAllLines(@"C:\\Users\\HUAWEI\\Desktop\\алг2.txt", list2);
+
+
+        //fiocity
+        string path3 = @"C:\\Users\\HUAWEI\\Desktop\\алг3.txt";
+        using (FileStream fs = File.Create(path3))
+        Console.WriteLine("Введите фамилию, имя, отчество и город для сортировки (через Enter)");
+        string sf = Convert.ToString(Console.ReadLine());
+        string sn = Convert.ToString(Console.ReadLine());
+        string sb = Convert.ToString(Console.ReadLine());
+        string sc = Convert.ToString(Console.ReadLine());
+        List<string> list3 = new List<string>();
+        Console.WriteLine("В файл алг3.txt на Вашем рабочем столе по данной сортировке будут занесены следующие данные:");
+        for (int i = 0; i < basa.Length; i++)
+        {
+            if (basa[i].sortedByFIOCit(basa[i], sf, sn, sb, sc) != null)
+            {
+                Console.WriteLine(basa[i].getInformation(basa[i]));
+                list3.Add(basa[i].getInformation(basa[i]));
+            }
+        }
+        File.AppendAllLines(@"C:\\Users\\HUAWEI\\Desktop\\алг3.txt", list3);
+    }
+}
