@@ -1,0 +1,149 @@
+def func(matrix, d, d1, f, l):
+    for i in range(0,8):
+        for j in range(0,8):
+            if matrix[i][j]==max(d1):
+                if not(matrix[i][j-1] in d):
+                    if matrix[i][j-1]==100:
+                        print("длина минимального пути =", max(d1)+1)
+                        f=0
+                        l=max(d1)+1
+                    matrix[i][j-1]=max(d1)+1
+                if not(matrix[i][j+1] in d):
+                    if matrix[i][j+1]==100:
+                        print("длина минимального пути =",max(d1)+1)
+                        f=0
+                        l=max(d1)+1
+                    matrix[i][j+1]=max(d1)+1
+                if not(matrix[i-1][j] in d):
+                    if matrix[i-1][j]==100:
+                        print("длина минимального пути =",max(d1)+1)
+                        f=0
+                        l=max(d1)+1
+                    matrix[i-1][j]=max(d1)+1
+                if not(matrix[i+1][j] in d):
+                    if matrix[i+1][j]==100:
+                        print("длина минимального пути =",max(d1)+1)
+                        f=0
+                        l=max(d1)+1
+                    matrix[i+1][j]=max(d1)+1
+                if not(matrix[i-1][j-1] in d):
+                    if matrix[i-1][j-1]==100:
+                        print("длина минимального пути =",max(d1)+1)
+                        f=0
+                        l=max(d1)+1
+                    matrix[i-1][j-1]=max(d1)+1
+                if not(matrix[i-1][j+1] in d):
+                    if matrix[i-1][j+1]==100:
+                        print("длина минимального пути =",max(d1)+1)
+                        f=0
+                        l=max(d1)+1
+                    matrix[i-1][j+1]=max(d1)+1
+                if not(matrix[i+1][j-1] in d):
+                    if matrix[i+1][j-1]==100:
+                        print("длина минимального пути =",max(d1)+1)
+                        f=0
+                        l=max(d1)+1
+                    matrix[i+1][j-1]=max(d1)+1
+                if not(matrix[i+1][j+1] in d):
+                    if matrix[i+1][j+1]==100:
+                        print("длина минимального пути =",max(d1)+1)
+                        f=0
+                        l=max(d1)+1
+                    matrix[i+1][j+1]=max(d1)+1
+    return matrix, f, l
+def vost(matrix,n,m):
+    maxs=l-1
+    p=[]
+    p.append((n,m))
+    while maxs>0:
+        for i in range(1,8):
+            for j in range(1,8):
+                if maxs==0:
+                    break
+                if matrix[n-1][m]==maxs and n-1==i and m==j:
+                    n=i
+                    m=j
+                    p.append((n,m))
+                    maxs=maxs-1
+                    break
+                else:
+                    if matrix[n-1][m-1]==maxs and n-1==i and m-1==j:
+                        n=i
+                        m=j
+                        p.append((n,m))
+                        maxs=maxs-1
+                        break
+                    else:
+                        if matrix[n][m-1]==maxs and n==i and m-1==j:
+                            n=i
+                            m=j
+                            p.append((n,m))
+                            maxs=maxs-1
+                            break
+                        else:
+                            if matrix[n+1][m+1]==maxs and n+1==i and m+1==j:
+                                n=i
+                                m=j
+                                p.append((n,m))
+                                maxs=maxs-1
+                                break
+                            else:
+                                if matrix[n+1][m]==maxs and n+1==i and m==j:
+                                    n=i
+                                    m=j
+                                    p.append((n,m))
+                                    maxs=maxs-1
+                                    break
+                                else:
+                                    if matrix[n][m+1]==maxs and n==i and m+1==j:
+                                        n=i
+                                        m=j
+                                        p.append((n,m))
+                                        maxs=maxs-1
+                                        break
+                                    else:
+                                        if matrix[n+1][m-1]==maxs and n+1==i and m-1==j:
+                                            n=i
+                                            m=j
+                                            p.append((n,m))
+                                            maxs=maxs-1
+                                            break
+                                        else:
+                                            if matrix[n-1][m+1]==maxs and n-1==i and m+1==j:
+                                                n=i
+                                                m=j
+                                                p.append((n,m))
+                                                maxs=maxs-1
+                                                break
+    return p
+# -1 - стены, 0 - начало пути, 100 - конец пути
+matrix=[[-1, -1, -1, -1, -1, -1, -1, -1, -1],
+        [-1, 0,  50, 50, 50, 50, 50, 50, -1],
+        [-1, 50, 50, -1, 50, 50, 50, 50, -1],
+        [-1, 50, 50, -1, 50, 50, 50, 50, -1],
+        [-1, 50, 50, 50, 50, 50, 50, 50, -1],
+        [-1, 50, -1, 50, 50, 50, -1,  -1, -1],
+        [-1, 50, -1, 50, 50, 50, -1, 50, -1],
+        [-1, 50, -1, 50, 50, 50, 50, 100, -1],
+        [-1, -1, -1, -1, -1, -1, -1, -1, -1]]
+d=[0, -1]
+d1=[0]
+for i in range(0,9):
+    for j in range(0,9):
+        if matrix[i][j]==100:
+            n=i
+            m=j
+f=1
+l=0
+for i in range(1,8):
+    matrix, f, l=func(matrix, d, d1, f, l)
+    d.append(i)
+    d1.append(i)
+for i in range(1,8):
+    print(matrix[i][1:8])
+if f==1:
+    print("невозможно достичь")
+else:
+    p=vost(matrix,n,m)
+    p=p[::-1]
+    print("путь:",p)
