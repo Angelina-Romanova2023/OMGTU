@@ -1,0 +1,63 @@
+class FileWork
+{
+    static void Main(string[] args)
+    {
+        string line1;
+        string line2;
+
+        try
+        {
+            StreamReader f1 = new StreamReader("C:\\Users\\HUAWEI\\Desktop\\первый.txt");
+            StreamReader f2 = new StreamReader("C:\\Users\\HUAWEI\\Desktop\\второй.txt");
+            StreamWriter f3 = new StreamWriter(@"C:\\Users\\HUAWEI\\Desktop\\файл.txt");
+
+            line1 = f1.ReadLine();
+            line2 = f2.ReadLine();
+
+            while (line1 != null && line2 != null)
+            {
+                if (int.Parse(line1) < int.Parse(line2) && line1 != null && line2 != null)
+                {
+                    f3.WriteLine(line1);
+                    Console.WriteLine(line1);
+                    line1 = f1.ReadLine();
+                }
+                else if (int.Parse(line1) > int.Parse(line2) && line1 != null && line2 != null)
+                {
+                    f3.WriteLine(line2);
+                    Console.WriteLine(line2);
+                    line2 = f2.ReadLine();
+                }
+                else if ((int.Parse(line1) == int.Parse(line2)) && (line1 != null && line2 != null))
+                {
+                    f3.WriteLine(line2);
+                    Console.WriteLine(line2);
+                    line2 = f2.ReadLine();
+                    line1 = f1.ReadLine();
+                }
+            }
+
+            while (line2 != null)
+            {
+                f3.WriteLine(line2);
+                Console.WriteLine(line2);
+                line2 = f2.ReadLine();
+            }
+
+            while (line1 != null)
+            {
+                f3.WriteLine(line1);
+                Console.WriteLine(line1);
+                line1 = f1.ReadLine();
+            }
+
+            f1.Close();
+            f2.Close();
+            f3.Close();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Ошибка: " + ex.Message);
+        }
+    }
+}
