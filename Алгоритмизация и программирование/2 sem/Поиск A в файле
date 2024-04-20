@@ -1,0 +1,62 @@
+class FileWork
+{
+    static void Main(string[] args)
+    {
+        string line;
+        int k = 0;
+        int m = 1000000000;
+        string s="";
+        List<string> list = new List<string>();
+        try
+        {
+            StreamReader f1 = new StreamReader("C:\\Users\\HUAWEI\\Desktop\\alg.txt");
+            line = f1.ReadLine();
+            while (line != null)
+            {
+                foreach (var i in line)
+                {
+                    if (i == 'A')
+                    {
+                        k = k + 1;
+                        s = line;
+                        list.Add(s);
+                    }
+                    if (i != 'A' && k != 0)
+                    {
+                        if (k < m)
+                        {
+                            m = k;
+                        }
+                        k = 0;
+                    }
+                }
+                if (k < m && k != 0)
+                    m = k;
+                line = f1.ReadLine();
+            }
+            int n=0;
+            foreach (var l in list)
+            {
+                foreach (var c in l)
+                {
+                    if (c == 'A')
+                    {
+                        n++;
+                    }
+                }
+                if (n == m)
+                {
+                    Console.WriteLine(l);
+                    break;
+                }
+                n = 0;
+            }
+
+            f1.Close();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Ошибка: " + ex.Message);
+        }
+    }
+}
