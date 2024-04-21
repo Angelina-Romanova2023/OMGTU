@@ -1,0 +1,39 @@
+f=open('input_s1_09.txt')
+f=f.readline()
+l=[]
+for i in f.split(' '):
+    l.append(i)
+if len(l)%2==0:
+    s=[l[round(len(l)/2)]]
+    for i in range(1,round(len(l)/2)+1):
+        s.append(l[round(len(l)/2)-i])
+        if i<round(len(l)/2):
+            s.append(l[round(len(l)/2)+i])
+if len(l)%2==1:
+    s=[l[round((len(l)-1)/2)]]
+    for i in range(1,round((len(l)+1)/2)):
+        s.append(l[round((len(l)-1)/2)-i])
+        s.append(l[round((len(l)-1)/2)+i])
+str=""
+m=[]
+for i in s:
+    if len(i)%2==0:
+        str=i[round(len(i)/2)]
+        for j in range(1,round(len(i)/2)+1):
+            str+=i[round(len(i)/2)-j]
+            if j<round(len(i)/2):
+                str+=i[round(len(i)/2)+j]
+        m.append(str)
+    if len(i)%2==1:
+        str=i[round((len(i)-1)/2)]
+        for j in range(1,round((len(i)+1)/2)):
+            str+=i[round((len(i)-1)/2)-j]
+            str+=i[round((len(i)-1)/2)+j]
+        m.append(str)
+rez=""
+for i in m:
+    rez+=i+" "
+print(rez[:-1])
+'''f=open('output_s1_09.txt')
+f=f.readline()
+print(f)'''
