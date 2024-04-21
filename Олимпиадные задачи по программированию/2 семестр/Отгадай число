@@ -1,0 +1,32 @@
+x = 1 # коэффициент перед иксом
+b = 0 # коэффициент перед не иксом
+
+with open("input_s1_12.txt") as f:
+N = int(f.readline().replace('\n',''))
+for i in range(N):
+sv = f.readline().replace('\n','')
+a.append(sv.split())
+R = int(f.readline().replace('\n',''))
+
+
+for i in range(N):
+if a[i][0] == "*":
+x*=int(a[i][1])
+b*=int(a[i][1])
+else:
+if a[i][0] == "-":
+p = -1
+else:
+p = 1
+
+if "x" in a[i][1]:
+if a[i][1] == "x":
+a[i][1] = "1"
+else:
+a[i][1] = a[i][1].replace("x","")
+
+x+=p*int(a[i][1])
+else:
+b+=p*int(a[i][1])
+
+print(int((R-b)/x))
