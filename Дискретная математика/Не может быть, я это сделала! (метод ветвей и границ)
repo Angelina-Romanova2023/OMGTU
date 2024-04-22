@@ -1,0 +1,107 @@
+matrix=[[0,1, 2, 3, 4, 5],
+        [1, 100, 41, 17, 23, 32],
+        [2, 13, 100,  45, 12, 37],
+        [3, 80, 45, 100, 50, 64],
+        [4, 23, 12, 50, 100, 67],
+        [5, 32, 37, 64, 67, 100]]
+p=[]
+sum=0
+n=len(matrix[0])-1
+it=0
+v=[]
+for i in range(1,n+1):
+    v.append(i)
+f=0
+it=1
+for u in range(n):
+    #находим минимальное значение в строках и отнимаем
+    result1=[]
+    matrixs=[[0]*(n)]*(n)
+    for i in range(1,n+1):
+        matrixs[i-1]=matrix[i][1:]
+    result1 = list(map(min, matrixs))
+    for i in range(1,n+1):
+        for j in range(1,n+1):
+            if matrix[i][j]!=100:
+                matrix[i][j]=matrix[i][j]-result1[i-1]
+                
+    #находим минимальное значение в столбцах и отнимаем
+    matrixs=[[0]*(n)]*(n)
+    for i in range(1,n+1):
+        matrixs[i-1]=matrix[i][1:]
+    result2 = list(map(min, zip(*matrixs)))
+    for i in range(1,n+1):
+        for j in range(1,n+1):
+            if matrix[i][j]!=100:
+                matrix[i][j]=matrix[i][j]-result2[j-1]
+
+    #находим нижнюю оценку
+    for i in range(0,n):
+        sum+=result1[i]+result2[i]
+
+    #степени нулей в matrix1
+    matrix1=[[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
+    for i in range(1,n+1):
+        for j in range(1,n+1):
+            if matrix[i][j]==0:
+                minsr=100
+                minsl=100
+                for k in range(1,n+1):
+                    for z in range(1,n+1):
+                        if k==i and z!=j:
+                            minsr=min(minsr,matrix[k][z])
+                        if k==j and z!=i:
+                            minsl=min(minsl,matrix[z][k])
+                matrix1[i][j]=minsr+minsl
+    max0=0
+    for i in range(1,n+1):
+        for j in range(1,n+1):
+            if matrix1[i][j]>max0:
+                max0=max(max0,matrix1[i][j])
+                k=i #строка, в которой степень нуля макс
+                z=j #столбец, в котором степень нуля макс
+    #добавляем строку и столбец в пройденные
+    k1=0
+    z1=0
+    for i in range(0,n+1):
+        for j in range(0,n+1):
+            if i==k and k1==0:
+                k1=matrix[i][0]
+            if j==z and z1==0:
+                z1=matrix[0][j]   
+    p.append((k1,z1))
+
+    # исключаем замыкание
+    for i in range(0,n+1):
+        for j in range(0,n+1):
+            if matrix[i][0]==z1 and matrix[0][j]==k1:
+                matrix[i][j]=100
+            
+    # удаляем строку
+    if len(matrix)>1:
+        for i in range(0,n+1):
+            if matrix[i][0]==k1:
+                _ = matrix.pop(i)
+                break
+    
+    # удаляем столбец
+    if len(matrix)>1:
+        for i in range(0,n+1):
+            if matrix[0][i]==z1:
+                e=i
+        rows = len(matrix)
+        for i in range(rows):
+            _ = matrix[i].pop(e)
+    n-=1
+    it+=1
+print("Длина Гамильтоного цикла =",sum)
+print("Дуги, входящие в цикл:",p)
