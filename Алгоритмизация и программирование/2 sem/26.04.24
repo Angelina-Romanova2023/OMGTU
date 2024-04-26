@@ -1,0 +1,39 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApplication22
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var spisok = new List<string> { "word1", "word02", "word3", "word04" };
+            Console.WriteLine("Дан следующий список:");
+            foreach (var i in spisok)
+                Console.WriteLine(i);
+            var chet = spisok.Where(sl => sl.Length % 2 == 0);
+            Console.WriteLine("Элементы с четной длиной строки:");
+            foreach (var i in chet)
+                Console.WriteLine(i);
+            Console.WriteLine("Добавим в список следующие слова: word05, word6, word7");
+            spisok.AddRange(new[] { "word05", "word6", "word7" });
+            Console.WriteLine("Теперь он выглядит так:");
+            foreach (var i in spisok)
+                Console.WriteLine(i);
+            spisok.RemoveAt(1);
+            spisok.RemoveAt(2);
+            spisok.RemoveAt(3);
+            Console.WriteLine("Удаляем из списка каждый четный элемент...");
+            foreach (var i in spisok)
+                Console.WriteLine(i);
+            var chet1 = spisok.Where(sl => sl.Length % 2 == 0);
+            Console.WriteLine("Элементы с четной длиной после удаления");
+            foreach (var i in chet1)
+                Console.WriteLine(i);
+            Console.ReadLine();
+        }
+    }
+}
