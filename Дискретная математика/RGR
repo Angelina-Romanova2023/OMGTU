@@ -1,0 +1,86 @@
+from typing import Dict, List, Tuple
+from collections import defaultdict
+from heapq import heappush, heappop
+
+class Edge:
+    def __init__(self, to: int, weight: int):
+        self.to = to
+        self.weight = weight
+
+class DijkstraAlgorithm:
+    def __init__(self):
+        self.graph: Dict[int, List[Edge]] = defaultdict(list)
+        self.previous: Dict[int, int] = {}
+
+    def add_edge(self, _from: int, to: int, weight: int):
+        self.graph[_from].append(Edge(to, weight))
+        self.graph[to].append(Edge(_from, weight))
+
+    def dijkstra(self, start, kon, nom: int, mins: (int, int)):
+        pq: List[Tuple[int, int]] = [(0, start)]
+        dist: Dict[int, int] = {node: float('inf') for node in self.graph}
+        dist[start] = 0
+
+        while pq:
+            d, u = heappop(pq)
+            if d > dist[u]:
+                continue
+            for edge in self.graph[u]:
+                v, weight = edge.to, edge.weight
+                if dist[u] + weight < dist[v]:
+                    dist[v] = dist[u] + weight
+                    self.previous[v] = u
+                    heappush(pq, (dist[v], v))
+
+        for node, distance in dist.items():
+            if node== kon:
+                mins.append((nom, distance))
+    def clear_graph(self):
+        self.graph = defaultdict(list)
+        self.previous = {}
+
+def main():
+    f=open("rgr diskr.txt")
+    f=f.readlines()
+    count=0
+    a=[]
+    mins=[(4,100000)]
+    for i in f:
+        count+=1
+        a.append(i[:-1])
+    a.remove(a[-1])
+    a.append(i)
+    d = DijkstraAlgorithm()
+    N = count
+    nom=1
+    for i in range(1,N):
+        a1=a[i].split(" ")
+        d.add_edge(int(a1[0])-1, int(a1[1])-1, int(a1[2]))
+    print("Введите начальную вершину, а затем конечную")
+    start = int(input())
+    kon = int(input())
+    d.dijkstra(start-1, kon-1, nom, mins)
+    d.clear_graph()
+
+    nom=2
+    for i in range(1,N):
+        a1=a[i].split(" ")
+        d.add_edge(int(a1[0])-1, int(a1[1])-1, int(a1[3]))
+    d.dijkstra(start-1, kon-1, nom, mins)
+    d.clear_graph()
+
+    nim=3
+    for i in range(1,N):
+        a1=a[i].split(" ")
+        d.add_edge(int(a1[0])-1, int(a1[1])-1, int(a1[4]))
+    d.dijkstra(start-1, kon-1, nom, mins)
+    mind=1000
+    for i in mins:
+        if i[1]<mind:
+            mind=i[1]
+    for i in mins:
+        if mind==i[1]:
+            print("компания номер", i[0],"гарантирует поездку за", i[1])
+
+if __name__ == "__main__":
+    main()
