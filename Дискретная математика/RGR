@@ -75,7 +75,7 @@ def main():
     d.dijkstra(start-1, kon-1, nom, mins)
     d.clear_graph()
 
-    nim=3
+    nom=3
     for i in range(1,N):
         a1=a[i].split(" ")
         d.add_edge(int(a1[0])-1, int(a1[1])-1, int(a1[4]))
