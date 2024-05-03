@@ -88,7 +88,7 @@ def main():
     if leng==1:
         print("входной файл имеет некорректные даные")
     for i in mins:
-        if i[1]<mind and i[i]!=int(a[0]+1):
+        if i[1]<mind:
             mind=i[1]
     for i in mins:
         if mind==i[1]:
