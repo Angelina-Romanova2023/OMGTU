@@ -1,0 +1,100 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+class Nomera
+{
+    private string NomS { get; set; }
+    public string FIO { get; set; }
+    private string NomT { get; set; }
+    private string Doh { get; set; }
+    private string Rash { get; set; }
+    private string Nal { get; set; }
+
+    public Nomera(string NomS, string FIO, string NomT, string Doh, string Rash, string Nal)
+    {
+        this.NomS = NomS;
+        this.FIO = FIO;
+        this.NomT = NomT;
+        this.Doh = Doh;
+        this.Rash = Rash;
+        this.Nal = Nal;
+    }
+
+    public string getInformation(Nomera nomera)
+    {
+        return nomera != null ? $" {nomera.NomS}  {nomera.FIO}  {nomera.NomT}  {nomera.Doh}  {nomera.Rash}  {nomera.Nal}" : " ";
+    }
+
+    public string getDoh(Nomera nomera)
+    {
+        return nomera != null ? nomera.Doh : null;
+    }
+
+    public string getRash(Nomera nomera)
+    {
+        return nomera != null ? nomera.Rash : null;
+    }
+
+    public string getNal(Nomera nomera)
+    {
+        return nomera != null ? nomera.Nal : null;
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        Console.WriteLine("Введите количество счетов");
+        int k = Convert.ToInt32(Console.ReadLine());
+        Nomera[] nomera = new Nomera[k];
+
+        for (int i = 0; i < nomera.Length; i++)
+        {
+            Console.WriteLine("Введите данные клиента через пробел (формат ФИО: фамилия_имя_отчество)");
+            string[] line = Console.ReadLine().Split(" ");
+            string nalog = Convert.ToString((int.Parse(line[3]) * 5 / 100));
+            string[] line1 = new string[6];
+            int f = 0;
+
+            foreach (var l in line)
+            {
+                line1[f] = l;
+                f++;
+            }
+
+            line1[f] = nalog;
+
+            nomera[i] = new Nomera(line1[0], line1[1], line1[2], line1[3], line1[4], line1[5]);
+        }
+
+        //задание 1
+        int kol = nomera.Count(n => (int.Parse(n.getDoh(n)) - int.Parse(n.getRash(n)) - int.Parse(n.getNal(n))) < 0);
+        Console.WriteLine(kol);
+
+        //задание 2
+        double balans = -int.MaxValue;
+        string bogkl;
+        Stack<string> stack = new Stack<string>();
+
+        foreach (Nomera n in nomera)
+        {
+            if ((int.Parse(n.getDoh(n)) - int.Parse(n.getRash(n)) - int.Parse(n.getNal(n))) > balans)
+            {
+                balans = (int.Parse(n.getDoh(n)) - int.Parse(n.getRash(n)) - int.Parse(n.getNal(n)));
+                bogkl = n.getInformation(n);
+                stack.Push(bogkl);
+            }
+        }
+        Console.WriteLine(stack.Pop());
+
+        //задание 3
+        double srdoh = nomera.Average(n => int.Parse(n.getDoh(n)));
+        Console.WriteLine(srdoh);
+
+        //задание 4
+        double sumnal = nomera.Sum(n => int.Parse(n.getNal(n)));
+        Console.WriteLine(sumnal);
+    }
+}
