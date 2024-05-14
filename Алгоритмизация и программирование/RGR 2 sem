@@ -1,0 +1,209 @@
+using System;
+using System.Collections;
+class Skob
+{
+    public void Skobki()
+    {
+        static void ShowPush(Stack st, string a)
+        {
+            st.Push(a);
+            Console.Write("Содержимое стека: ");
+            foreach (object i in st)
+                Console.Write(i + " ");
+            Console.WriteLine();
+        }
+
+        static void Main()
+        {
+            Console.WriteLine("введите количество элементов стека");
+            int n = Convert.ToInt32(Console.ReadLine());
+            if (n == 0)
+                Console.WriteLine("стэк пуст");
+            Stack st = new(n);
+            foreach (object i in st)
+                Console.Write(i + " ");
+            for (int i = 0; i < n; i++)
+            {
+                Console.WriteLine("введите скобочку");
+                ShowPush(st, Convert.ToString(Console.ReadLine()));
+            }
+            int f = 3;
+            for (int i = 0; i < (n - 1);)
+            {
+                object st1 = st.Pop();
+                object st2 = st.Pop();
+                Console.WriteLine(st1);
+                Console.WriteLine(st1);
+                if (((string)st1 == ")") && ((string)st2 == "("))
+                {
+                    f = 1;
+                }
+                else
+                {
+                    if (((string)st1 == "}") && ((string)st2 == "{"))
+                    {
+                        f = 1;
+                    }
+                    else
+                    {
+                        if (((string)st1 == "]") && ((string)st2 == "["))
+                        {
+                            f = 1;
+                        }
+                        else
+                        {
+                            f = 0;
+                            break;
+                        }
+                    }
+                }
+                i = i + 2;
+            }
+            if (f == 0)
+                Console.WriteLine("скобки расставлены неправильно");
+            if (f == 1)
+                Console.WriteLine("скобки расставлены правильно");
+        }
+    }
+}
+class Pol
+{
+    public void Pols()
+    {
+        static void Main()
+        {
+            Console.WriteLine("Введите польскую запись (после каждого символа - пробел)");
+            string s = Convert.ToString(Console.ReadLine());
+            if (s.Length == 0)
+                throw new ArgumentException("Отсутствие элементов для выполнения действий");
+            string[] m = s.Split(' ');
+            switch (m[2])
+            {
+                case "+":
+                    break;
+                case "-":
+                    break;
+                case "*":
+                    break;
+                case "/":
+                    break;
+                default:
+                    throw new ArgumentException("Результат ответа будет неоднозначен");
+            }
+            for (int i = 4; i < m.Length;)
+            {
+                switch (m[i])
+                {
+                    case "+":
+                        break;
+                    case "-":
+                        break;
+                    case "*":
+                        break;
+                    case "/":
+                        break;
+                    default:
+                        throw new ArgumentException("Результат ответа будет неоднозначен");
+                }
+                i += 2;
+            }
+            Stack st = new Stack();
+            foreach (string c in m)
+            {
+                if (IsOperator(c))
+                {
+                    double st2 = Convert.ToDouble(st.Pop());
+                    double st1 = Convert.ToDouble(st.Pop());
+                    double res;
+                    switch (c)
+                    {
+                        case "+":
+                            res = st1 + st2;
+                            break;
+                        case "-":
+                            res = st1 - st2;
+                            break;
+                        case "*":
+                            res = st1 * st2;
+                            break;
+                        case "/":
+                            if (st2 == 0)
+                                throw new ArgumentException("Деление на 0 невозможно");
+                            res = st1 / st2;
+                            break;
+                        default:
+                            throw new ArgumentException("Недопустимый оператор: " + c);
+                    }
+                    st.Push(res);
+                }
+                else
+                {
+                    st.Push(Convert.ToDouble(c));
+                }
+            }
+            double fin = Convert.ToDouble(st.Pop());
+            Console.WriteLine("Результат вычислений: " + fin);
+        }
+        static bool IsOperator(string c)
+        {
+            return c == "+" || c == "-" || c == "*" || c == "/";
+        }
+    }
+}
+class Menu
+{
+    static void Main()
+    {
+        bool n = true;
+        while (n)
+        {
+            Console.WriteLine("Выберите, какой пункт Вам нужен: 1 - информация об авторе; 2 - подсчет значения обратной польской записи; 3 - проверка расстановки собочек; 4 - exit");
+            int tip = Convert.ToInt32(Console.ReadLine());
+            if (tip == 1)
+            {
+                Console.WriteLine("Автор: Романова Ангелина Александровна");
+                Console.WriteLine("Обучающаяся 1 курса, группа ФИТ-231");
+            }
+            else if (tip == 2)
+            {
+                Console.WriteLine("введите действие: 1 - предоставить данные о задаче; 2 - подсчет значения выражения, предоставленного в виде обратной польской записи");
+                int op = Convert.ToInt32(Console.ReadLine());
+                switch (op)
+                {
+                    case 1:
+                        Console.WriteLine("На вход подается математическое выражение. Необходимо построить обратную польскую запись и на её основе вычислить программой значение данного выражения, используя один stack.");
+                        break;
+                    case 2:
+                        Pol pol = new Pol();
+                        pol.Pols();
+                        break;
+                    default:
+                        Console.WriteLine("наверное, Вы промахнулись по кнопке, попробуйте ещё разок");
+                        break;
+                }
+            }
+            else if (tip == 3)
+            {
+                Console.WriteLine("введите действие: 1 - предоставить данные о задаче; 2 - проверить расстановку скобок");
+                int op = Convert.ToInt32(Console.ReadLine());
+                switch (op)
+                {
+                    case 1:
+                        Console.WriteLine("Имеется выражение, содержащее 3 вида скобок: (), {}, []. Необходимо определить правильно ли расставлены скобки, используя один stack.");
+                        break;
+                    case 2:
+                        Skob skob = new Skob();
+                        skob.Skobki();
+                        break;
+                    default:
+                        Console.WriteLine("наверное, Вы промахнулись по кнопке, попробуйте ещё разок");
+                        break;
+                }
+            }
+            else if (tip == 4)
+            {
+                n = false;
+            }
+        }
+    }
+}
