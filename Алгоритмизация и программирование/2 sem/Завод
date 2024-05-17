@@ -1,0 +1,91 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+class Zavod
+{
+    private string ID { get; set; }
+    public string FIO { get; set; }
+    private string Educ { get; set; }
+    public string Spez { get; set; }
+    public string Many { get; set; }
+    public string Kol { get; set; }
+    public string Coin { get; set; }
+    public string SumP { get; set; }
+    public string Proz { get; set; }
+
+    public Zavod(string ID, string FIO, string Educ, string Spez, string Many, string Kol, string Coin, string SumP, string Proz)
+    {
+        this.ID = ID;
+        this.FIO = FIO;
+        this.Educ = Educ;
+        this.Spez = Spez;
+        this.Many = Many;
+        this.Kol = Kol;
+        this.Coin = Coin;
+        this.SumP = SumP;
+        this.Proz = Proz;
+    }
+
+    public string getInformation(Zavod zavod)
+    {
+        return zavod != null ? $" {zavod.ID}  {zavod.FIO}  {zavod.Educ}  {zavod.Spez}  {zavod.Many}  {zavod.Kol}  {zavod.Coin} " : " ";
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        Console.WriteLine("Введите количество сотрудников");
+        int k = Convert.ToInt32(Console.ReadLine());
+        Zavod[] zavod = new Zavod[k];
+
+        for (int i = 0; i < zavod.Length; i++)
+        {
+            Console.WriteLine("Введите данные клиента через пробел (формат ФИО: фамилия_имя_отчество)");
+            Console.WriteLine("1)ID, 2)ФИО, 3)образование, 4)специальность, 5)зарплата, 6)количество произведенных товаров, 7)цена товара за единицу");
+            string[] line = Console.ReadLine().Split(" ");
+            int SumP = (int.Parse(line[5]) * int.Parse(line[6])); //сумма вырабатываемой продукции
+            string[] line1 = new string[9];
+            int f = 0;
+
+            foreach (var l1 in line)
+            {
+                line1[f] = l1;
+                f++;
+            }
+            line1[f] = Convert.ToString(SumP);
+            line1[f+1]= Convert.ToString(SumP/2);
+            zavod[i] = new Zavod(line1[0], line1[1], line1[2], line1[3], line1[4], line1[5], line[6], line1[7], line1[8]);
+        }
+
+        // Z1
+        var poorlyPaidEmployees = zavod.Where(z => int.Parse(z.Many) < int.Parse(z.SumP));
+        if (poorlyPaidEmployees.Any())
+        {
+            Console.WriteLine("Poorly paid employees:");
+            foreach (var employee in poorlyPaidEmployees)
+            {
+                Console.WriteLine(employee.getInformation(employee));
+            }
+        }
+        else
+        {
+            Console.WriteLine("Fortunately, no such employees were found =)");
+        }
+
+        // Z2
+        var totalNumberOfUnits = zavod.Sum(z => int.Parse(z.Kol));
+        Console.WriteLine($"Total number of units produced by all employees: {totalNumberOfUnits}");
+
+        //Z3
+        var totalProductionCost = zavod.Sum(z => int.Parse(z.SumP));
+        Console.WriteLine($"Total production cost of all employees: {totalProductionCost}");
+
+        //Z4
+        var highlyPaidEmployees = zavod.Where(z => int.Parse(z.Many) >= int.Parse(z.Proz));
+        int numberOfHighlyPaidEmployees = highlyPaidEmployees.Count();
+        Console.WriteLine($"Number of employees who receive at least 50% of their production cost: {numberOfHighlyPaidEmployees}");
+    }
+}
