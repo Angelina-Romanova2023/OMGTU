@@ -1,0 +1,44 @@
+from collections import deque
+def bfs(graph, ist, stok, pred, v):
+    v=[False]*len(graph)
+    q=deque()
+    q.append(ist)
+    v[ist]=True
+    pred[ist]=-1
+    while q:
+        u=q.popleft()
+        for i in range(len(graph)):
+            if not v[i] and graph[u][i]>0:
+                q.append(i)
+                v[i]=True
+                pred[i]=u
+                if i==stok:
+                    return True
+    return False
+def maxp(graph, ist, stok):
+    v=[-1]*len(graph)
+    pred=[-1]*len(graph)
+    maxP=0
+    while bfs(graph, ist, stok, pred, v):
+        path=float('inf')
+        a=stok
+        while a!=ist:
+            path=min(path, graph[pred[a]][a])
+            a=pred[a]
+        maxP+=path
+        a=stok
+        while a!=ist:
+            u=pred[a]
+            graph[u][a]-=path
+            graph[a][u]+=path
+            a=pred[a]
+    return maxP
+if __name__=='__main__':
+    graph=[[0, 20, 30, 10, 0],
+           [0, 0, 30, 0, 30],
+           [0, 0, 0, 10, 20],
+           [0, 0, 0, 0, 20],
+           [0, 0, 0, 0, 0]]
+    ist=0
+    stok=4
+    print(f"Максимальный поток = {maxp(graph, ist, stok)}")
