@@ -33,12 +33,11 @@ def maxp(graph, ist, stok):
             graph[a][u]+=path
             a=pred[a]
     return maxP
-if __name__=='__main__':
-    graph=[[0, 20, 30, 10, 0],
-           [0, 0, 30, 0, 30],
-           [0, 0, 0, 10, 20],
-           [0, 0, 0, 0, 20],
-           [0, 0, 0, 0, 0]]
-    ist=0
-    stok=4
-    print(f"Максимальный поток = {maxp(graph, ist, stok)}")
+graph=[[0, 20, 30, 10, 0],
+       [0, 0, 30, 0, 30],
+       [0, 0, 0, 10, 20],
+       [0, 0, 0, 0, 20],
+       [0, 0, 0, 0, 0]]
+ist=0
+stok=4
+print(f"Максимальный поток = {maxp(graph, ist, stok)}")
