@@ -1,0 +1,32 @@
+import sys
+graph = [[0, 1, 1, 1, 0, 0, 0],
+        [1, 0, 1, 0, 1, 0, 1],
+        [1, 1, 0, 1, 1, 1, 1],
+        [1, 0, 1, 0, 1, 1, 1],
+        [0, 1, 1, 1, 0, 1, 0],
+        [0, 0, 1, 1, 1, 0, 1],
+        [0, 1, 1, 1, 0, 1, 0]]
+cycles = []
+paths = []
+def recurs(path):
+    a = []
+    for i in range(len(graph)):
+        if graph[path[-1]][i] == 1 and i not in path:
+            a.append(i)
+    if not a and len(path) == len(graph):
+        if graph[path[0]][path[-1]] == 1:
+            cycles.append(path[:])
+        else:
+            paths.append(path[:])
+        return
+    for i in a:
+        path.append(i)
+        recurs(path)
+        path.pop()
+recurs([0])
+print(f"Пути:")
+for path in paths:
+    print(", ".join(map(str, path)))
+print(f"Циклы:")
+for cycle in cycles:
+    print(", ".join(map(str, cycle)))
